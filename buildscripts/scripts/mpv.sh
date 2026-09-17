@@ -16,6 +16,9 @@ fi
 
 unset CC CXX # meson wants these unset
 
+# libmpv links with the C driver (mpv is C-only) but pulls in C++
+# objects (harfbuzz, fftools_ffi). Statically link the C++ runtime
+# or dlopen fails at runtime with unresolved __gxx_personality_v0.
 meson setup $build --cross-file "$prefix_dir"/crossfile.txt \
 	--prefer-static \
 	--default-library shared \
@@ -26,7 +29,8 @@ meson setup $build --cross-file "$prefix_dir"/crossfile.txt \
 	-Diconv=disabled \
 	-Dvulkan=disabled \
 	-Daaudio=disabled \
-	-Dmanpage-build=disabled
+	-Dmanpage-build=disabled \
+	-Dc_link_args=-lc++_static,-lc++abi,-lunwind
 
 ninja -C $build -j$cores
 DESTDIR="$prefix_dir" ninja -C $build install
