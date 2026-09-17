@@ -68,7 +68,6 @@ cpuflags=
 	--enable-small \
 	--enable-hwaccels \
 	--enable-optimizations \
-	--enable-runtime-cpudetect \
 	\
 	--enable-mbedtls \
 	\

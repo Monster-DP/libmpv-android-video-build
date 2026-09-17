@@ -29,6 +29,10 @@ jobs:
           java-version: 17
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+      - name: Setup build tools
+        run: |
+          pip3 install --upgrade meson ninja
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Symlink SDK
         working-directory: ./buildscripts
         run: |
@@ -39,16 +43,6 @@ jobs:
         run: |
           sudo chmod +x bundle_default.sh
           ./bundle_default.sh
-      - name: Bundle (full)
-        working-directory: ./buildscripts
-        run: |
-          sudo chmod +x bundle_full.sh
-          ./bundle_full.sh
-      - name: Bundle (encoders-gpl)
-        working-directory: ./buildscripts
-        run: |
-          sudo chmod +x bundle_encoders-gpl.sh
-          ./bundle_encoders-gpl.sh
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -62,7 +56,7 @@ jobs:
         with:
           draft: true
           prerelease: false
-          tag_name: "vnext"
+          tag_name: "v1.2.0-mpv041"
           files: |
             buildscripts/*.zip
             buildscripts/artifacts/**
