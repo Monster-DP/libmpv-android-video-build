@@ -43,7 +43,7 @@ mkdir -p deps && cd deps
 [ ! -d libass ] && git clone --depth 1 --branch $v_libass https://github.com/libass/libass.git libass
 
 # libplacebo
-[ ! -d libplacebo ] && git clone --depth 1 --branch v$v_libplacebo https://github.com/haasn/libplacebo.git libplacebo
+[ ! -d libplacebo ] && git clone --depth 1 --branch v$v_libplacebo --recursive https://github.com/haasn/libplacebo.git libplacebo
 
 # shaderc
 mkdir -p shaderc

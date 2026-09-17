@@ -16,6 +16,10 @@ fi
 
 unset CC CXX # meson wants these unset
 
+# glad (GL loader generator) and its jinja deps live as git submodules;
+# make sure they exist even if the clone was not done with --recursive
+git submodule update --init --depth 1
+
 # mpv 0.41+ requires libplacebo (vo_gpu removed, gpu-next/pl_opengl only).
 # We only need the OpenGL backend for media_kit's render API, so disable
 # vulkan and both SPIRV compilers (glslang/shaderc are vulkan-only codegen);
